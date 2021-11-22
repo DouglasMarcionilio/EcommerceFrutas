@@ -67,19 +67,19 @@ class SacolaController extends Disposable {
     );
   }
 
-  finalizarPedido()async{
+  finalizarPedido() async {
     var status = await Permission.storage.request();
-                    if (status.isGranted) {
-                      final pdf = pw.Document();
-                      pdf.addPage(await pdfPage.pdfConfiguration());
-                      final archive = File(
-                              'storage/emulated/0/Download/${DateTime.now().hashCode}.pdf')
-                          .create()
-                          .then(
-                            (value) async => value.writeAsBytes(
-                              await pdf.save(),
-                            ),
-                          );
-                    }
+    if (status.isGranted) {
+      final pdf = pw.Document();
+      pdf.addPage(await pdfPage.pdfConfiguration());
+      final archive =
+          File('storage/emulated/0/Download/${DateTime.now().hashCode}.pdf')
+              .create()
+              .then(
+                (value) async => value.writeAsBytes(
+                  await pdf.save(),
+                ),
+              );
+    }
   }
 }

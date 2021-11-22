@@ -36,6 +36,7 @@ class CardCompraController extends Disposable {
     inQtdCompra.add(qtd);
     val = valor;
     inTotalCompra.add(val);
+    total = valor;
   }
 
   addQtd() {
@@ -57,16 +58,18 @@ class CardCompraController extends Disposable {
   }
 
   adicionarASacola(Produto produto, BuildContext context) {
+    //Adição de item a sacola
     if (!sacolaController.editando) {
       ItemSacola itemSacola =
           ItemSacola(produto: produto, qtd: qtd, total: total);
       principalController.listItensSacolas.add(itemSacola);
-      principalController.qtdItensSacola += 1;
       principalController.inQtdItensSacola
-          .add(principalController.qtdItensSacola);
+          .add(principalController.listItensSacolas.length);
       sacolaController.totalSacola += total;
       sacolaController.inTotalSacola.add(sacolaController.totalSacola);
-    } else {
+    }
+    //Edição de item que já estava na sacola
+    else {
       principalController.listItensSacolas
           .removeAt(sacolaController.indexListSacola);
       ItemSacola itemSacola =
@@ -80,5 +83,17 @@ class CardCompraController extends Disposable {
     Navigator.pop(context);
   }
 
-  finalizarPedido() {}
+  //Removendo item da sacola
+  removerItem(BuildContext context) {
+    ItemSacola item =
+        principalController.listItensSacolas[sacolaController.indexListSacola];
+    sacolaController.totalSacola -= item.total;
+    sacolaController.inTotalSacola.add(sacolaController.totalSacola);
+    principalController.listItensSacolas
+        .removeAt(sacolaController.indexListSacola);
+    sacolaController.inLItemSacola.add(principalController.listItensSacolas);
+    principalController.inQtdItensSacola
+        .add(principalController.listItensSacolas.length);
+    Navigator.pop(context);
+  }
 }

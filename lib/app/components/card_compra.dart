@@ -142,6 +142,24 @@ class CardCompra extends StatelessWidget {
               ),
               Row(
                 children: [
+                  Visibility(
+                    visible: sacolaController.editando,
+                    child: Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 2.0, left: 8, right: 8),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            cardCompraController.removerItem(context);
+                          },
+                          child: Text('Remover'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: Padding(
                       padding:
@@ -155,13 +173,13 @@ class CardCompra extends StatelessWidget {
                             ? 'Atualizar'
                             : 'Adicionar a sacola'),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
+                          primary: Colors.orange,
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),
